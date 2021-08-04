@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Formik.module.css";
-import { useFormik } from "formik";
+import { Formik, Form , Field, ErrorMessage} from "formik";
 import * as Yup from "yup";
 
 const initialValues = {
@@ -21,54 +21,52 @@ const validationSchema = Yup.object({
 })
 
 const YoutubeForm = () => {
-    const formik = useFormik({
-        initialValues,
-        onSubmit,
-        // validate,
-        validationSchema
-    });
-
-    console.log("visited fields", formik.touched); //reflects state of the form ...
-    console.log("form state value", formik.values);
-    console.log("form errors", formik.errors);
+    
 
     return (
-        <div className={styles.container}>
-            <form onSubmit={formik.handleSubmit}>
+        <div  className={styles.container}>
+
+       
+        <Formik 
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+       >
+            <Form>
                 <div className="form-control">
                 <label htmlFor="name">Name</label>
-                <input
+                <Field
                     type="text"
                     id="name"
                     name="name"
                     className={styles.input}
-                   {...formik.getFieldProps('name')}
                 />
-                { formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
+                {/* ErrorMessage component render errors conditionaly now we dont have to use formik.touched and formik.error */}
+              <ErrorMessage name='name' /> 
                 </div>
                
                 <label htmlFor="email">Email</label>
-                <input
+                <Field
                     type="email"
                     id="email"
                     name="email"
                     className={styles.input}
-                    {...formik.getFieldProps('email')}
+                 
                 />
-                 { formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null }
+                <ErrorMessage name='email' />
 
                 <label htmlFor="channel">Channel</label>
-                <input
+                <Field
                     type="text"
                     id="channel"
                     name="channel"
                     className={styles.input}
-                   {...formik.getFieldProps('channel')} //for reducing code ===> when we have same onChange,onBlur, value.......
                 />
-                 { formik.touched.channel && formik.errors.channel ? <div>{formik.errors.channel}</div> : null }
+                <ErrorMessage name='channel' />
 
                 <button type="submit" className={styles.submit} >Submit</button>
-            </form>
+            </Form>
+        </Formik>
         </div>
     );
 };
