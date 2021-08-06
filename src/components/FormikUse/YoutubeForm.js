@@ -7,6 +7,8 @@ const initialValues = {
     name: "",
     email: "",
     channel: "",
+    comments:"",
+    address:""
 }
 const onSubmit =  values => {
     console.log(values, "form data");
@@ -17,7 +19,8 @@ const validationSchema = Yup.object({
     email: Yup.string()
         .email('Invalid email format')
         .required('email is required'),
-    channel:Yup.string().required('Required')
+    channel:Yup.string().required('Required'),
+    address:Yup.string().required('Required'),
 })
 
 const YoutubeForm = () => {
@@ -44,7 +47,7 @@ const YoutubeForm = () => {
                 {/* ErrorMessage component render errors conditionaly now we dont have to use formik.touched and formik.error */}
               <ErrorMessage name='name' /> 
                 </div>
-               
+                <div className="form-control">
                 <label htmlFor="email">Email</label>
                 <Field
                     type="email"
@@ -54,7 +57,8 @@ const YoutubeForm = () => {
                  
                 />
                 <ErrorMessage name='email' />
-
+                </div>
+                <div className="form-control">
                 <label htmlFor="channel">Channel</label>
                 <Field
                     type="text"
@@ -63,7 +67,30 @@ const YoutubeForm = () => {
                     className={styles.input}
                 />
                 <ErrorMessage name='channel' />
-
+                </div>
+                <div className="form-control">
+                    <Field
+                        as='textarea'
+                        id='comments'
+                        name='comments'
+                        className={styles.input}
+                    />
+                </div>
+                <div className="form-control">
+                    <Field name='address' className={styles.input}>
+                      {
+                          (props) => {
+                            const { field, form, meta } = props  
+                            console.log(props);
+                            return (<div>
+                             <input type='text' id='address' {...field} />
+                            { meta.touched && meta.error ? <div> {meta.error} </div> : null }
+                            </div>
+                            )
+                          }
+                      }              
+                    </Field>
+                </div>        
                 <button type="submit" className={styles.submit} >Submit</button>
             </Form>
         </Formik>
