@@ -9,7 +9,11 @@ const initialValues = {
     email: "",
     channel: "",
     comments:"",
-    address:""
+    address:"",
+    social:{
+        facebook:'',
+        twitter:'',
+    }
 }
 const onSubmit =  values => {
     console.log(values, "form data");
@@ -88,14 +92,22 @@ const YoutubeForm = () => {
                             const { field,form, meta } = props  
                             console.log(props);
                             return (<div>
-                             <input type='text' id='address' {...field} />
+                             <input type='text' id='address' {...field} className={styles.input} />
                             { meta.touched && meta.error ? <div> {meta.error} </div> : null }
                             </div>
                             )
                           }
                       }              
                     </Field>
-                </div>        
+                </div>  
+                <div className="form-control">
+                    <label htmlFor="facebook">Facebook Profile</label>
+                    <Field type="text" id="facebook" name="social.facebook" className={styles.input} />   
+                </div>   
+                <div className="form-control">
+                    <label htmlFor="facebook">Twitter Profile</label>
+                    <Field type="text" id="facebook" name="social.twitter" className={styles.input}/>   
+                </div>   
                 <button type="submit" className={styles.submit} >Submit</button>
             </Form>
         </Formik>
