@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Formik.module.css";
 import { Formik, Form , Field, ErrorMessage} from "formik";
 import * as Yup from "yup";
+import TextError from "./TextError";
 
 const initialValues = {
     name: "",
@@ -45,7 +46,7 @@ const YoutubeForm = () => {
                     className={styles.input}
                 />
                 {/* ErrorMessage component render errors conditionaly now we dont have to use formik.touched and formik.error */}
-              <ErrorMessage name='name' /> 
+              <ErrorMessage name='name' component={TextError}/> 
                 </div>
                 <div className="form-control">
                 <label htmlFor="email">Email</label>
@@ -56,7 +57,11 @@ const YoutubeForm = () => {
                     className={styles.input}
                  
                 />
-                <ErrorMessage name='email' />
+                <ErrorMessage name='email'>
+                    {
+                    (errMsg) => <div className={styles.error}>{errMsg}</div>
+                    }
+                 </ErrorMessage>   
                 </div>
                 <div className="form-control">
                 <label htmlFor="channel">Channel</label>
@@ -80,7 +85,7 @@ const YoutubeForm = () => {
                     <Field name='address' className={styles.input}>
                       {
                           (props) => {
-                            const { field, form, meta } = props  
+                            const { field,form, meta } = props  
                             console.log(props);
                             return (<div>
                              <input type='text' id='address' {...field} />
