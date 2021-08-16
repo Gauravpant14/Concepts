@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Formik.module.css";
-import { Formik, Form , Field, ErrorMessage} from "formik";
+import { Formik, Form , Field, ErrorMessage, FieldArray} from "formik";
 import * as Yup from "yup";
 import TextError from "./TextError";
 
@@ -12,8 +12,9 @@ const initialValues = {
     address:"",
     social:{
         facebook:'',
-        twitter:'',
-    }
+        insta:'',
+    },
+    phoneNumbers:['','']
 }
 const onSubmit =  values => {
     console.log(values, "form data");
@@ -26,15 +27,18 @@ const validationSchema = Yup.object({
         .required('email is required'),
     channel:Yup.string().required('Required'),
     address:Yup.string().required('Required'),
+    comments:Yup.string().required('Required'),
+    social: Yup.object().shape({
+        facebook: Yup.string().required('Facebook username is required'),
+        insta: Yup.string().required('Insta username is required')
+      }),
 })
 
 const YoutubeForm = () => {
     
 
     return (
-        <div  className={styles.container}>
-
-       
+        <div  className={styles.container}> 
         <Formik 
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -78,14 +82,17 @@ const YoutubeForm = () => {
                 <ErrorMessage name='channel' />
                 </div>
                 <div className="form-control">
+                <label htmlFor="comments">Comments</label>
                     <Field
                         as='textarea'
                         id='comments'
                         name='comments'
                         className={styles.input}
                     />
+                    <ErrorMessage name="comments" />
                 </div>
                 <div className="form-control">
+                    <label htmlFor='address'>Address</label>
                     <Field name='address' className={styles.input}>
                       {
                           (props) => {
@@ -98,16 +105,40 @@ const YoutubeForm = () => {
                             )
                           }
                       }              
-                    </Field>
-                </div>  
+                    </Field>  
+                </div> 
+
+                {/*  Here We are implementing nested objects
+                  *  checkout at initaialValues for how we have define nested object
+                  *  also checkout validateSchema for getting idea of how we implement validation for that
+                */}
+                      
                 <div className="form-control">
                     <label htmlFor="facebook">Facebook Profile</label>
-                    <Field type="text" id="facebook" name="social.facebook" className={styles.input} />   
-                </div>   
+                    <Field type="text" id="facebook" name="social.facebook" className={styles.input}/>
+                    <ErrorMessage name="social.facebook" />
+                </div> 
                 <div className="form-control">
-                    <label htmlFor="facebook">Twitter Profile</label>
-                    <Field type="text" id="facebook" name="social.twitter" className={styles.input}/>   
-                </div>   
+                    <label htmlFor="instagram">Instagram Profile</label>
+                    <Field type="text" id="instagram" name="social.insta" className={styles.input} />
+                    <ErrorMessage name="social.insta" />
+                </div> 
+
+                 {/*  Here We are implementing array's
+                  *  
+                  *  
+                */}
+
+                <div className="form-control">
+                    <label htmlFor="primaryPh">Primary Phone Number</label>
+                    <Field type="text" id="primaryPh" name="phoneNumbers[0]" className={styles.input} />
+                    <ErrorMessage name="social.insta" />
+                </div> 
+                <div className="form-control">
+                    <label htmlFor="secondaryPh">Secondary Phone Number</label>
+                    <Field type="text" id="secondaryPh" name="phoneNumbers[1]" className={styles.input} />
+                    <ErrorMessage name="social.insta" />
+                </div> 
                 <button type="submit" className={styles.submit} >Submit</button>
             </Form>
         </Formik>

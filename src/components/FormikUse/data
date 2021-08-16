@@ -1,0 +1,45 @@
+                <div className="form-control">
+                    <label htmlFor="facebook">Facebook Profile</label>
+                    <Field type="text" id="facebook" name="social.facebook" className={styles.input} />   
+                </div>   
+                <div className="form-control">
+                    <label htmlFor="facebook">Twitter Profile</label>
+                    <Field type="text" id="facebook" name="social.twitter" className={styles.input}/>   
+                </div>  
+
+                <div className="form-control">
+                    <label htmlFor="phoneNo1">Primary Phone Number</label>
+                    <Field type="text" id="phoneNo1" name="phoneNo[0]" className={styles.input}/>   
+                </div>
+
+                <div className="form-control">
+                    <label htmlFor="phoneNo2">Seconday Phone Number</label>
+                    <Field type="text" id="phoneNo2" name="phoneNo[1]" className={styles.input}/>   
+                </div>   
+
+                <div className="form-control">
+                    <label>List OF Phone Numbers</label>
+                    <FieldArray name="pNumbers">
+                      {
+                          (fieldArrayProps) => {
+                            console.log('fieldArrayProps',fieldArrayProps)
+                            const{ push, remove, form } = fieldArrayProps
+                            const { values } = form
+                            const { pNumbers } = values
+                          
+
+                            return <div>
+                                {
+                                    pNumbers.map((pNum,index) => (
+                                        <div key={index}>
+                                            <Field name={`pNumbers[${index}]`} className={styles.input}/>
+                                            <button type='button' onClick={() => remove(index)}>-</button>
+                                            <button type='button' onClick={() => push('')}>+</button>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                          }
+                      }
+                    </FieldArray>  
+                </div> 
