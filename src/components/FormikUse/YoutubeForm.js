@@ -32,6 +32,7 @@ const validationSchema = Yup.object({
         facebook: Yup.string().required('Facebook username is required'),
         insta: Yup.string().required('Insta username is required')
       }),
+    phoneNumbers:Yup.array().of(Yup.string().required("Add Mobile Numbers"))  
 })
 
 const YoutubeForm = () => {
@@ -132,12 +133,12 @@ const YoutubeForm = () => {
                 <div className="form-control">
                     <label htmlFor="primaryPh">Primary Phone Number</label>
                     <Field type="text" id="primaryPh" name="phoneNumbers[0]" className={styles.input} />
-                    <ErrorMessage name="social.insta" />
+                    <ErrorMessage name="phoneNumbers" />
                 </div> 
                 <div className="form-control">
                     <label htmlFor="secondaryPh">Secondary Phone Number</label>
                     <Field type="text" id="secondaryPh" name="phoneNumbers[1]" className={styles.input} />
-                    <ErrorMessage name="social.insta" />
+                    <ErrorMessage name="phoneNumbers" />
                 </div> 
                 <button type="submit" className={styles.submit} >Submit</button>
             </Form>
