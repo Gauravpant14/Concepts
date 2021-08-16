@@ -14,7 +14,8 @@ const initialValues = {
         facebook:'',
         insta:'',
     },
-    phoneNumbers:['','']
+    phoneNumbers:['',''],
+    phNumbers:['']
 }
 const onSubmit =  values => {
     console.log(values, "form data");
@@ -97,8 +98,7 @@ const YoutubeForm = () => {
                     <Field name='address' className={styles.input}>
                       {
                           (props) => {
-                            const { field,form, meta } = props  
-                            console.log(props);
+                            const { field,form, meta } = props
                             return (<div>
                              <input type='text' id='address' {...field} className={styles.input} />
                             { meta.touched && meta.error ? <div> {meta.error} </div> : null }
@@ -125,10 +125,12 @@ const YoutubeForm = () => {
                     <ErrorMessage name="social.insta" />
                 </div> 
 
-                 {/*  Here We are implementing array's
-                  *  
-                  *  
-                */}
+                 {
+                 /*  Here We are implementing array's
+                  *   validation for array type is also added in   
+                  *   validation schema
+                  */
+                  }
 
                 <div className="form-control">
                     <label htmlFor="primaryPh">Primary Phone Number</label>
@@ -140,6 +142,49 @@ const YoutubeForm = () => {
                     <Field type="text" id="secondaryPh" name="phoneNumbers[1]" className={styles.input} />
                     <ErrorMessage name="phoneNumbers" />
                 </div> 
+
+                  {
+                  /*  Here We are implementing Dynamic fields using 
+                  *    FieldArray component, inital value of array 
+                  *    will be one empty string '', cause there 
+                  *    will be only one field at first.  
+                  *    
+                  *    To be in control of dynamic form control,We 
+                  *    need to use the render props pattern
+                  *    (function as children)
+                  *    of FieldArray 
+                  */ 
+                  }
+
+                  <div className="form-control">
+                      <label htmlFor="">
+                          List of Phone Numbers
+                      </label>
+                      <FieldArray name="phNumbers">
+                        {
+                            (fieldArrayProps) => {
+                                // console.log("fieldArrayProps",fieldArrayProps)
+                                const { push, remove, form } = fieldArrayProps;
+                                const {values} = form;
+                                const { phNumbers } = values;
+                                return <div>
+                                    {
+                                    phNumbers.map((phNumbers,index) => (
+                                        <div key={index}>
+                                            <Field name={`phNumbers[${index}]`} className={styles.input}/>
+                                            {
+                                                index > 0 && <button type="button" onClick={() => remove(index)}>-</button>
+                                            }
+                                            <button type="button" onClick={() => push('')}>+</button>
+                                        </div>
+                                    ))
+                                    }
+                                    </div>
+                            }
+                        }
+                      </FieldArray>
+                  </div>
+
                 <button type="submit" className={styles.submit} >Submit</button>
             </Form>
         </Formik>
