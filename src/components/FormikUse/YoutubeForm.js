@@ -36,6 +36,16 @@ const validationSchema = Yup.object({
     phoneNumbers:Yup.array().of(Yup.string().required("Add Mobile Numbers"))  
 })
 
+
+//this is for field level validation 
+const validateNums = value => {
+    let error;
+    if(!value){
+        error= 'required !!!'
+    }
+    return error
+}
+
 const YoutubeForm = () => {
     
 
@@ -171,11 +181,12 @@ const YoutubeForm = () => {
                                     {
                                     phNumbers.map((phNumbers,index) => (
                                         <div key={index}>
-                                            <Field name={`phNumbers[${index}]`} className={styles.input}/>
+                                            <Field name={`phNumbers[${index}]`} className={styles.input} validate={validateNums}/>
                                             {
                                                 index > 0 && <button type="button" onClick={() => remove(index)}>-</button>
                                             }
-                                            <button type="button" onClick={() => push('')}>+</button>
+                                            <button type="button" onClick={() => push('')} >+</button>
+                                            <ErrorMessage name={`phNumbers[${index}]`} />
                                         </div>
                                     ))
                                     }
