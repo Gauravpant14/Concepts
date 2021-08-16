@@ -56,6 +56,9 @@ const YoutubeForm = () => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
        >
+          { (formik) => {
+              console.log(formik);
+            return(
             <Form>
                 <div className="form-control">
                 <label htmlFor="name">Name</label>
@@ -196,8 +199,10 @@ const YoutubeForm = () => {
                       </FieldArray>
                   </div>
 
-                <button type="submit" className={styles.submit} >Submit</button>
-            </Form>
+                <button type="submit" className={styles.submit} disabled={!formik.isValid}>Submit</button>
+            </Form>);
+           } 
+        }
         </Formik>
         </div>
     );
