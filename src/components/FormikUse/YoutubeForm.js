@@ -17,8 +17,15 @@ const initialValues = {
     phoneNumbers:['',''],
     phNumbers:['']
 }
-const onSubmit =  values => {
+const onSubmit =  (values,onSubmitProps) => {
+   
+
     console.log(values, "form data");
+    setTimeout(() => {
+        onSubmitProps.setSubmitting(false);
+    }, 5000);
+    // onSubmitProps.setSubmitting(false); // call this after api response (Button will be disabled until this is true)
+
 }
 
 const validationSchema = Yup.object({
@@ -199,7 +206,7 @@ const YoutubeForm = () => {
                       </FieldArray>
                   </div>
 
-                <button type="submit" className={styles.submit} disabled={!formik.isValid}>Submit</button>
+                <button type="submit" className={styles.submit} disabled={!formik.isValid || formik.isSubmitting} style={formik.isSubmitting ? {backgroundColor:'red' } : null}>Submit</button>
             </Form>);
            } 
         }
