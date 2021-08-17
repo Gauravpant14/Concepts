@@ -8,6 +8,7 @@ import SearchBox from "./components/SearchBox";
 import UseMemoUse from "./components/UseMemoUse";
 import RefUse from "./components/RefUse";
 import YoutubeForm from "./components/FormikUse/YoutubeForm";
+import FormikContainer from "./components/FormikPractical/FormikContainer";
 // import UserContainer from "./components/UserContainer";
 // import UseSel from "./components/UseSel";
 
@@ -42,7 +43,9 @@ function App() {
 
         {/* <RefUse /> */}
 
-        <YoutubeForm />
+        {/* <YoutubeForm /> */}
+
+        <FormikContainer />
       </div>
     </Provider>
   );

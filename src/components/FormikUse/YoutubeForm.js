@@ -42,14 +42,12 @@ const savedValues = {
 }
 
 const onSubmit =  (values,onSubmitProps) => {
-   
-
     console.log(values, "form data");
     setTimeout(() => {
         onSubmitProps.setSubmitting(false);
     }, 5000);
     // onSubmitProps.setSubmitting(false); // call this after api response (Button will be disabled until this is true)
-
+    onSubmitProps.resetForm(); // Reset Form after Submitting the form
 }
 
 const validationSchema = Yup.object({
@@ -237,6 +235,7 @@ const YoutubeForm = () => {
                   </div>
 
                 <button type='button' onClick={() => setFormValues(savedValues)}>Load Saved Data</button>  
+                <button type="reset">Reset</button>
                 <button type="submit" className={styles.submit} disabled={!formik.isValid || formik.isSubmitting} style={formik.isSubmitting ? {backgroundColor:'red' } : null}>Submit</button>
             </Form>);
            } 
