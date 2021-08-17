@@ -3,6 +3,7 @@ import styles from "./Formik.module.css";
 import { Formik, Form , Field, ErrorMessage, FieldArray} from "formik";
 import * as Yup from "yup";
 import TextError from "./TextError";
+import { useState } from "react";
 
 const initialValues = {
     name: "",
@@ -17,6 +18,29 @@ const initialValues = {
     phoneNumbers:['',''],
     phNumbers:['']
 }
+
+/*
+
+* Now we are creating savedVaues that will be same as initial values 
+* For loading saved data we have to use enableReinitialize prop inside formik
+* The saved data willbe come from api
+
+*/
+
+const savedValues = {
+    name: "Gaurav",
+    email: "g@g.com",
+    channel: "reac-js",
+    comments:"welcome to the channel",
+    address:"kuchauli malsoona",
+    social:{
+        facebook:'',
+        insta:'',
+    },
+    phoneNumbers:['',''],
+    phNumbers:['']
+}
+
 const onSubmit =  (values,onSubmitProps) => {
    
 
@@ -53,15 +77,21 @@ const validateNums = value => {
     return error
 }
 
+const isBool = 'checking'
+
+
 const YoutubeForm = () => {
-    
+    const [val,setVal] = React.useState(!isBool); 
+    const [formValues,setFormValues] = React.useState(null);
 
     return (
         <div  className={styles.container}> 
+        {console.log(val)}
         <Formik 
-        initialValues={initialValues}
+        initialValues={ formValues ||initialValues }
         validationSchema={validationSchema}
         onSubmit={onSubmit}
+        enableReinitialize
        >
           { (formik) => {
               console.log(formik);
@@ -206,6 +236,7 @@ const YoutubeForm = () => {
                       </FieldArray>
                   </div>
 
+                <button type='button' onClick={() => setFormValues(savedValues)}>Load Saved Data</button>  
                 <button type="submit" className={styles.submit} disabled={!formik.isValid || formik.isSubmitting} style={formik.isSubmitting ? {backgroundColor:'red' } : null}>Submit</button>
             </Form>);
            } 
